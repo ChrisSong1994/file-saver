@@ -14,6 +14,15 @@
             node.dispatchEvent(evt);
         }
     };
+    function corsEnabled(url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("HEAD", url, false);
+        try {
+            xhr.send();
+        }
+        catch (e) { }
+        return xhr.status >= 200 && xhr.status <= 299;
+    }
     var fetchBlob = function (url) {
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
@@ -36,12 +45,10 @@
     var downloadURL = function (url, name) {
         if (name === void 0) { name = ""; }
         var link = document.createElement("a");
-        link.download = name;
         link.href = url;
         if ("download" in document.createElement("a")) {
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            link.download = name;
+            click(link);
         }
         else {
             link.target = "_blank";
@@ -49,31 +56,35 @@
         }
     };
     var filesaver = (function (url, filename) {
-        return fetchBlob(url)
-            .then(function (resp) {
-            if (resp.blob) {
-                return resp.blob();
-            }
-            else {
-                return new Blob([resp]);
-            }
-        })
-            .then(function (blob) {
-            if ("msSaveOrOpenBlob" in navigator) {
-                window.navigator.msSaveOrOpenBlob(blob, filename);
-            }
-            else {
-                var obj = URL.createObjectURL(blob);
-                downloadURL(obj, filename);
-                URL.revokeObjectURL(obj);
-            }
-        })
-            .catch(function (err) {
-            throw new Error(err.message);
-        });
+        if (corsEnabled(url)) {
+            return fetchBlob(url)
+                .then(function (resp) {
+                if (resp.blob) {
+                    return resp.blob();
+                }
+                else {
+                    return new Blob([resp]);
+                }
+            })
+                .then(function (blob) {
+                if ("msSaveOrOpenBlob" in navigator) {
+                    window.navigator.msSaveOrOpenBlob(blob, filename);
+                }
+                else {
+                    var obj = URL.createObjectURL(blob);
+                    downloadURL(obj, filename);
+                    URL.revokeObjectURL(obj);
+                }
+            })
+                .catch(function (err) {
+                throw new Error(err.message);
+            });
+        }
+        else {
+            downloadURL(url, filename);
+        }
     });
 
     return filesaver;
 
 })));
-//# sourceMappingURL=index.js.map

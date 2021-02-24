@@ -12,7 +12,7 @@ const config = [
     output: {
       file: `dist/index.js`,
       format: "umd",
-      sourcemap: isDev,
+      // sourcemap: isDev,
       name:'filesaver'
     },
     plugins: [
