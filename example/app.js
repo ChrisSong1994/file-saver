@@ -21,7 +21,7 @@ router.get("/", (ctx) => {
 router.get("/download", (ctx) => {
   ctx.set({
     "Content-Type": "application/octet-stream", //告诉浏览器这是一个二进制文件
-    "Content-Disposition": "attachment; filename=demo.pdf", //告诉浏览器这是一个需要下载的文件
+    // "Content-Disposition": "attachment; filename=demo.pdf", //告诉浏览器这是一个需要下载的文件
   });
   const file = fs.readFileSync(path.resolve(__dirname,"./demo.pdf"));
   ctx.body = file;

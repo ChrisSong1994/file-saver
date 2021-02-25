@@ -1,6 +1,6 @@
 {
   "name": "@chrissong/file-saver",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "file saver for all browser ",
   "main": "dist/index.js",
   "files": [
