@@ -30,8 +30,8 @@ const click = (node: HTMLElement) => {
 function corsEnabled(url: string) {
   var xhr = new XMLHttpRequest();
   // use sync to avoid popup blocker
-  xhr.open("HEAD", url, false);
   try {
+    xhr.open("HEAD", url, false);
     xhr.send();
   } catch (e) {}
   return xhr.status >= 200 && xhr.status <= 299;

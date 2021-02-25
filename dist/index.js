@@ -16,8 +16,8 @@
     };
     function corsEnabled(url) {
         var xhr = new XMLHttpRequest();
-        xhr.open("HEAD", url, false);
         try {
+            xhr.open("HEAD", url, false);
             xhr.send();
         }
         catch (e) { }
