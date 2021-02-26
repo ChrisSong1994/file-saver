@@ -1,5 +1,5 @@
 // https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js
-// 绑定点击事件
+// 点击事件
 const click = (node: HTMLElement) => {
   try {
     node.dispatchEvent(new MouseEvent("click"));
@@ -29,9 +29,8 @@ const click = (node: HTMLElement) => {
 // 检查跨域
 function corsEnabled(url: string) {
   var xhr = new XMLHttpRequest();
-  // use sync to avoid popup blocker
   try {
-    xhr.open("HEAD", url, false);
+    xhr.open("HEAD", url, false); //需要设置同步请求
     xhr.send();
   } catch (e) {}
   return xhr.status >= 200 && xhr.status <= 299;
@@ -63,16 +62,10 @@ const fetchBlob = (url: string) => {
 // 构造下载链接
 const downloadURL = (url: string, name: string = "") => {
   const link = document.createElement("a");
-
+  if ("download" in document.createElement("a")) link.download = name;
   link.href = url;
-  if ("download" in document.createElement("a")) {
-    link.download = name;
-    click(link);
-  } else {
-    // 对不支持download进行兼容
-    link.target = "_blank";
-    click(link);
-  }
+  link.target = "_blank";
+  click(link);
 };
 
 /** 下载文档

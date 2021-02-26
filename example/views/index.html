@@ -7,20 +7,19 @@
     <title>文件下载</title>
     <script src="https://polyfill.io/v3/polyfill.js"></script>
     <script src="./index.js"></script>
-    <script src="./saveras.js"></script>
   </head>
   <body>
     <button onclick="downloadFile()">文件下载</button>
-    <button onclick="downloadCorsUrl('')">跨域文件下载</button>
+    <button onclick="downloadCorsUrl()">跨域文件下载</button>
     <script>
       function downloadFile() {
-        filesaver("/download", "test");
+        filesaver("/download", "test.pdf");
       }
 
       function downloadCorsUrl() {
         filesaver(
-          "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa0.att.hudong.com%2F30%2F29%2F01300000201438121627296084016.jpg&refer=http%3A%2F%2Fa0.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616764650&t=449d0afaa95e66f513eb3ae992a8868f",
-          "pic"
+          "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+          "pic1.png"
         );
       }
     </script>

@@ -45,15 +45,11 @@
     var downloadURL = function (url, name) {
         if (name === void 0) { name = ""; }
         var link = document.createElement("a");
-        link.href = url;
-        if ("download" in document.createElement("a")) {
+        if ("download" in document.createElement("a"))
             link.download = name;
-            click(link);
-        }
-        else {
-            link.target = "_blank";
-            click(link);
-        }
+        link.href = url;
+        link.target = "_blank";
+        click(link);
     };
     var filesaver = (function (url, filename) {
         if (corsEnabled(url)) {
